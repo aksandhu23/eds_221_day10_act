@@ -1,0 +1,31 @@
+---
+title: "Ice and Weather"
+format: html
+editor: visual
+output: 
+  html_document:
+    css: activity_theme.css
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+```{r}
+ice_data <- read_csv(here::here("data", "ice_data.csv"), na = c("-999", ""))
+  
+
+weather_data <- read_csv(here::here("data", "weather_data.csv"), na = c("-999", "")) 
+```
+
+```{r}
+ggplot(data = ice_data, aes(x = lakeid, y = ice_duration)) + geom_jitter() + geom_boxplot()
+```
+
+```{r}
+mean_cover <- ice_data |>
+  group_by(year4) |>
+  summarize(mean(ice_duration), na.rm = TRUE)
+```
